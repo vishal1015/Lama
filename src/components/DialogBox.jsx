@@ -5,7 +5,6 @@ function DialogBox() {
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleCloseDialog = () => {
-    setIsDialogOpen(false);
     setProjectName("");
     setErrorMessage("");
   };
