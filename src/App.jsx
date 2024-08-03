@@ -1,12 +1,11 @@
 
-import lamaLogo from './assets/lama.svg'
-
+import RouterProvider from './RouterProvider'
 function App() {
 
 
   return (
     <>
-        <img src={lamaLogo} alt=" lama" />
+      <RouterProvider />
     </>
   )
 }
