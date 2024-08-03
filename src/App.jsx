@@ -1,14 +1,12 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+
+import lamaLogo from './assets/lama.svg'
 
 function App() {
-  
+
 
   return (
     <>
-      <h1>Hare krishna </h1>
+        <img src={lamaLogo} alt=" lama" />
     </>
   )
 }
