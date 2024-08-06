@@ -9,8 +9,8 @@ export default {
         blacktextcolor3: "#3C3C3C",
         blackbackground: "#211935",
         whitetextcolor3: "#F8F8F8",
-
-        // add more colors 
+        greaytextcolor4: "#49454F",
+        // add more colors
       },
     },
   },

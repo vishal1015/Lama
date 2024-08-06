@@ -44,7 +44,7 @@ function AddProjectHome() {
         </div>
       </div>
       <div className="ml-60">
-        <button className=" flex flex-row gap-2 rounded-3xl shadow-md border border-black w-36">
+        <button className=" flex flex-row gap-2 rounded-3xl items-center justify-center p-1 shadow-lg border border-black w-36">
           <img src={Homeicon} alt="" className=" w-5 " />
           Back To Home
         </button>
@@ -76,9 +76,9 @@ function AddProjectHome() {
             <p>Create New Project</p>
           </button>
           {isDialogOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-          <div className="bg-white p-8 rounded-md">
-            <h2 className="text-lg font-bold">Create Project</h2>
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 ">
+          <div className="bg-white p-8 rounded-md  w-[40%] ">
+            <h2 className="text-lg font-bold  mb-4">Create Project</h2>
             <input
               type="text"
               placeholder="Enter project name"
@@ -88,12 +88,12 @@ function AddProjectHome() {
             />
             {errorMessage && <p className="text-red-500">{errorMessage}</p>}
             <div className="flex justify-end mt-4">
-              <button onClick={handleCloseDialog} className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded">
+              <button onClick={handleCloseDialog} className="bg-white hover:bg-gray-100 font-bold py-2 px-4 text-red-500 rounded">
                 Cancel
               </button>
               <button
                 onClick={handleSubmit}
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded   
+                className="bg-purple-700 hover:bg-purple-500 text-white font-bold py-2 px-4 rounded   
  ml-2"
               >
                 Create
