@@ -1,43 +1,14 @@
-// import HomePage from "./screens/AddProjectHome";
-// import AllProject from "./screens/AllProjects";
-// import Layout from "./Layout/Layout";
-// // import AboutUsPage from "pages/aboutUs";
-// import Upload from "./screens/Upload";
-// import Sidebar from "./sideBar/SideBar";
-// import { Children } from "react";
-
-// const routes = [
-//   {
-//     path: "/",
-//     component: HomePage,
-//   },
-//   {
-//     path: "app",
-//     component: Layout,
-//     Children: [
-//       {
-//         path: "app/upload",
-//         component: Upload,
-//       },
-//       {
-//         path: "app/all-project",
-//         component: AllProject,
-//       },
-//     ],
-//   },
-
-//   // and so on for other routes in your project
-// ];
-
-// export default routes;
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "../screens/HomePage";
-import AddProjectHome from "../screens/AddProjectHome";
-import AllProject from "../screens/AllProjects";
-import Layout from "../Layout/Layout";
-import Upload from "../screens/Upload";
-import AccountSetting from "../screens/AccountSetting";
+import AddProjectHome from "../screens/createPorjectScreens/AddProjectHome";
+import AllProject from "../screens/createPorjectScreens/AllProjects";
+import Layout from "../Layout/appLayout/Layout";
+import Upload from "../screens/uploadFLowScreen/Upload";
+import AccountSetting from "../screens/accountSettingScreen/AccountSetting";
+import Configuration from "../screens/configurationScreen/Configuration"
+import EditTranscriptScreen from "../screens/editTranscript/EditTranscriptScreen";
+import SampleProject from "../screens/uploadFLowScreen/SampleProject";
 
 const AppRoutes = () => {
   return (
@@ -45,10 +16,13 @@ const AppRoutes = () => {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="add-project" element={<AddProjectHome />} />
+        <Route path="all-project" element={<AllProject />} />
         <Route path="app" element={<Layout />}>
-          <Route path="upload" element={<Upload />} />
-          <Route path="all-project" element={<AllProject />} />
-          <Route path="account-setting" element={<AccountSetting/>} />
+          <Route path="/app" element={<Upload />} />
+          <Route path="account-setting" element={<AccountSetting />} />
+          <Route path="configurations" element={<Configuration />} />
+          <Route path="edit-transcript" element ={<EditTranscriptScreen/>} />
+          <Route path="sample" element ={<SampleProject/>} />
         </Route>
       </Routes>
     </Router>

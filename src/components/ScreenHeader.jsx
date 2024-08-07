@@ -1,6 +1,6 @@
-import HomeIcon from "../assets/homeIcon.svg";
-import BellIcon from "../assets/notificationBellIcon.svg";
-import Photo from "../../public/photo2.jpg";
+import HomeIcon from "/homeIcon.png";
+import BellIcon from "/bellIcon.png";
+import Photo from "/photo2.jpg";
 import { GoTriangleDown } from "react-icons/go";
 const ScreenHeader = () => {
   return (

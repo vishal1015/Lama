@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function DialogBox() {
+const DialogBox = () => {
   const [projectName, setProjectName] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 

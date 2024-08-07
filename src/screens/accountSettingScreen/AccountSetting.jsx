@@ -1,11 +1,10 @@
-import ProfileImg from "../../public/photo2.jpg"
+
 
 const AccountSetting = ()=>{
 
     return (
       <>
         <div className="flex flex-col gap-4  py-6 px-8">
-
           <div className=" flex flex-col gap-2 ">
             <div>
               <h1 className=" text-4xl text-bluetextcolor1 font-bold ">
@@ -15,7 +14,7 @@ const AccountSetting = ()=>{
             <div className="flex gap-6 p-4 items-center">
               <div className="flex-[1%]">
                 <img
-                  src={ProfileImg}
+                  src="/photo2.jpg"
                   alt=""
                   className="w-full h-auto rounded-full"
                 />
@@ -41,9 +40,9 @@ const AccountSetting = ()=>{
                 <h1 className=" text-4xl text-bluetextcolor1 font-bold p-2 ">
                   Subscriptions
                 </h1>
-                  <button className=" text-white bg-purple-900  rounded-lg font-bold  h-10 px-6 shadow-md ">
-                    Update
-                  </button>
+                <button className=" text-white bg-purple-900  rounded-lg font-bold  h-10 px-6 shadow-md ">
+                  Update
+                </button>
               </div>
 
               <div
