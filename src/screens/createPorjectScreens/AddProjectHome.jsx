@@ -1,44 +1,17 @@
 import Homevector from "../../assets/homeVector.svg"; 
 import { CiCirclePlus } from "react-icons/ci";
-import { useState } from "react";
-import HomeHeader from "../../components/creatProjectHomeHeader/HomeHeader";
- import { useNavigate } from "react-router";
-
+import { useContext } from "react";
+import DialogBox from "./DialogBox";
+import { ProjectContext } from "./ProjectHomeScreen";
 function AddProjectHome() {
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [projectNames, setProjectNames] = useState([]);
-  const [currentProjectName, setCurrentProjectName] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-  const navigate = useNavigate();
-
-  const handleOpenDialog = () => {
-    setIsDialogOpen(true);
-  };
-
-  const handleCloseDialog = () => {
-    setIsDialogOpen(false);
-    setCurrentProjectName("");
-    setErrorMessage("");
-  };
-
-  const handleSubmit = () => {
-    if (currentProjectName.trim() === "") {
-      setErrorMessage("Please enter a project name");
-    } else {
-      // Add the new project name to the array of project names
-      console.log(currentProjectName)
-      
-      setProjectNames([...projectNames, currentProjectName]);
-       console.log(projectNames);
-      handleCloseDialog();
-      navigate('/all-project')
-
-    }
-  };
+  
+  const {
+    isDialogOpen,
+    handleOpenDialog,
+  } = useContext(ProjectContext);
 
   return (
     <>
-      <HomeHeader />
       <div className="p-2 ml-20 mr-20 flex flex-col gap-2 justify-center items-center">
         <h1
           className="text-5xl text-bluetextcolor1 font-bold"
@@ -65,35 +38,37 @@ function AddProjectHome() {
             <CiCirclePlus />
             <p>Create New Project</p>
           </button>
-          {isDialogOpen && (
-            <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-              <div className="bg-white p-8 rounded-md w-[40%]">
-                <h2 className="text-lg font-bold mb-4">Create Project</h2>
-                <input
-                  type="text"
-                  placeholder="Enter project name"
-                  value={currentProjectName}
-                  onChange={(e) => setCurrentProjectName(e.target.value)}
-                  className="border border-gray-300 rounded w-full p-2 mt-2"
-                />
-                {errorMessage && <p className="text-red-500">{errorMessage}</p>}
-                <div className="flex justify-end mt-4">
-                  <button
-                    onClick={handleCloseDialog}
-                    className="bg-white hover:bg-gray-100 font-bold py-2 px-4 text-red-500 rounded"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    onClick={handleSubmit}
-                    className="bg-purple-700 hover:bg-purple-500 text-white font-bold py-2 px-4 rounded ml-2"
-                  >
-                    Create
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
+          {isDialogOpen && <DialogBox />
+          // (
+          //   <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+          //     <div className="bg-white p-8 rounded-md w-[40%]">
+          //       <h2 className="text-lg font-bold mb-4">Create Project</h2>
+          //       <input
+          //         type="text"
+          //         placeholder="Enter project name"
+          //         value={currentProjectName}
+          //         onChange={(e) => setCurrentProjectName(e.target.value)}
+          //         className="border border-gray-300 rounded w-full p-2 mt-2"
+          //       />
+          //       {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+          //       <div className="flex justify-end mt-4">
+          //         <button
+          //           onClick={handleCloseDialog}
+          //           className="bg-white hover:bg-gray-100 font-bold py-2 px-4 text-red-500 rounded"
+          //         >
+          //           Cancel
+          //         </button>
+          //         <button
+          //           onClick={handleSubmit}
+          //           className="bg-purple-700 hover:bg-purple-500 text-white font-bold py-2 px-4 rounded ml-2"
+          //         >
+          //           Create
+          //         </button>
+          //       </div>
+          //     </div>
+          //   </div>
+          // )
+          }
         </div>
       </div>
     </>

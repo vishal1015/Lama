@@ -1,16 +1,10 @@
 
-// routes
-// const appRoute = "/app";
+
+// ProjectHomeScreen
+const createProjectText = "Create Project";
+const enterProjectNameText = "Enter project name";
+const cancelText = "Cancel";
+const createText = "Create";
 
 
-//global
-const addText = "Add";
-
-
-export {
-  
-  // routes
-  // global 
-  addText 
-  
-};
+export { createProjectText, enterProjectNameText, cancelText, createText };

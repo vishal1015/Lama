@@ -9,20 +9,20 @@ import AccountSetting from "../screens/accountSettingScreen/AccountSetting";
 import Configuration from "../screens/configurationScreen/Configuration"
 import EditTranscriptScreen from "../screens/editTranscript/EditTranscriptScreen";
 import SampleProject from "../screens/uploadFLowScreen/SampleProject";
-
+import { ProjectHomeScreen } from "../components/import";
 const AppRoutes = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<ProjectHomeScreen />} />
         <Route path="add-project" element={<AddProjectHome />} />
         <Route path="all-project" element={<AllProject />} />
         <Route path="app" element={<Layout />}>
           <Route path="/app" element={<Upload />} />
           <Route path="account-setting" element={<AccountSetting />} />
           <Route path="configurations" element={<Configuration />} />
-          <Route path="edit-transcript" element ={<EditTranscriptScreen/>} />
-          <Route path="sample" element ={<SampleProject/>} />
+          <Route path="edit-transcript" element={<EditTranscriptScreen />} />
+          <Route path="sample" element={<SampleProject />} />
         </Route>
       </Routes>
     </Router>

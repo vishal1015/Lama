@@ -71,16 +71,6 @@ const TableComponent = () => {
   };
 
   return (
-    // <div className="container mx-auto border-2 border-gray-400 shadow-lg rounded-lg overflow-auto h-80">
-    //   <table className="min-w-full bg-white">
-    //     <thead>
-    //       <tr>
-    //         <th className="py-2  border-b">Name</th>
-    //         <th className="py-2 px-4 border-b">Uploaded Date & Time</th>
-    //         <th className="py-2 px-4 border-b">Status</th>
-    //         <th className="py-2 px-4 border-b">Action</th>
-    //       </tr>
-    //     </thead>
     <div className="container mx-auto p-4">
       <div className="table-container">
         <table className="table">
