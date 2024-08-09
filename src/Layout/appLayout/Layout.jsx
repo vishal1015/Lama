@@ -2,7 +2,7 @@
 import { Outlet, Link } from "react-router-dom";
 import "./Layout.css"; // Create this CSS file for styling
 import Sidebar from "../../sideBar/SideBar";
-import ScreenHeader from "../../components/ScreenHeader";
+import ScreenHeader from "../../components/LayoutScreenHeader/ScreenHeader";
 const Layout = () => {
   return (
     <>

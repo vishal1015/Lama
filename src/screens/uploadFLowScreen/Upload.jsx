@@ -2,6 +2,9 @@
 
 import photo from "/photo2.jpg"
 import cloud from "/cloud.png"
+import youtubeimg from "/youtube.png"
+import spotifyImg from "/spotyfi.png"
+import rssfeedImg from "/rssfeed.png"
 import { useState } from "react";
 import ChannelCard from "../../components/channelCard/ChannelCard";
 import { useNavigate} from "react-router-dom";
@@ -40,43 +43,45 @@ const Upload = () => {
       }
     };
   return (
-    <div className=" flex flex-row">
-      <div className=" w-full h-screen px-6 ">
-        <h1 className=" text-4xl text-bluetextcolor1 font-bold p-6 ">Upload</h1>
+    <div className=" flex flex-row px-8">
+      <div className=" w-full h-screen  ">
+        <h1 className=" text-4xl text-bluetextcolor1 font-bold pb-4 pl-4 ">
+          Upload
+        </h1>
         <div className="">
           <div className="grid grid-rows-2 grid-cols-3 gap-0 ">
             <ChannelCard
-              imgSrc="./photo2.jpg"
+              imgSrc={youtubeimg}
               text1="Upload"
               text2="Youtube Video"
               onClick={() => handleOpenDialog("Youtube Video")}
             />
             <ChannelCard
-              imgSrc="./another-photo.jpg"
+              imgSrc={spotifyImg}
               text1="New Video"
               text2="TikTok Upload"
               onClick={handleOpenDialog}
             />
             <ChannelCard
-              imgSrc="./photo2.jpg"
+              imgSrc={rssfeedImg}
               text1="Upload"
               text2="Youtube Video"
               onClick={handleOpenDialog}
             />
             <ChannelCard
-              imgSrc="./another-photo.jpg"
+              imgSrc={youtubeimg}
               text1="New Video"
               text2="TikTok Upload"
               onClick={handleOpenDialog}
             />
             <ChannelCard
-              imgSrc="./photo2.jpg"
+              imgSrc={spotifyImg}
               text1="Upload"
               text2="Youtube Video"
               onClick={handleOpenDialog}
             />
             <ChannelCard
-              imgSrc="./another-photo.jpg"
+              imgSrc={rssfeedImg}
               text1="New Video"
               text2="TikTok Upload"
               onClick={handleOpenDialog}

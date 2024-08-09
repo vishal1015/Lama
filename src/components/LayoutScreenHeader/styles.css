@@ -1,0 +1,57 @@
+.header-container {
+    width: 100%;
+    background-color: white;
+    border-radius: 0.5rem;
+    padding: 2.5rem 2.5rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.path-container {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.icon-small {
+    height: 1.5rem;
+    width: 1.5rem;
+}
+
+.path-text {
+    font-weight: 600;
+    color: #838383;
+    /* greaytextcolor2 */
+}
+
+.upload-text {
+    color: #7E22CE;
+    /* bluetextcolor1 */
+    font-weight: 600;
+}
+
+.options-container {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.language-container {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.language-text {
+    font-weight: 600;
+    color: #838383;
+    /* greaytextcolor2 */
+}
+
+.profile-pic {
+    height: 2rem;
+    width: 2rem;
+    border-radius: 50%;
+}
+
+.icon-medium {
+    height: 2rem;
+    width: 2rem;
+}

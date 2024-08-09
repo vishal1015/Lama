@@ -2,8 +2,8 @@ import  { createContext, useState } from "react";
 import HomeHeader from "../../components/creatProjectHomeHeader/HomeHeader";
 import AllProject from "./AllProjects";
 import AddProjectHome from "./AddProjectHome";
+// import axios from "axios";
 
-// Create the context
 export const ProjectContext = createContext();
 
 // Create a provider component
@@ -15,8 +15,16 @@ export const ProjectContext = createContext();
   const [errorMessage, setErrorMessage] = useState("");
 //   const navigate = useNavigate();
 
+    // const data = async () => {
+    //   try {
+    //     const res = await axios.get("http://localhost:5000/project/get");
+    //     const projects = res.data;
+    //     console.log("projects are: ", projects);
+    //   } catch (e) {
+    //     console.log("Error in getting projects: ", e.message);
+    //   }
+    // };
   const handleOpenDialog = () => {
-    console.log('clicked');
     setIsDialogOpen(true);
   };
 
@@ -27,12 +35,13 @@ export const ProjectContext = createContext();
   };
 
   const handleSubmit = () => {
-    if(isHome)setIsHome(false);
     if (currentProjectName.trim() === "") {
       setErrorMessage("Please enter a project name");
     } else {
       setProjectNames([...projectNames, currentProjectName]);
       handleCloseDialog();
+      // data();
+      if (isHome) setIsHome(false);
     //   navigate("/all-project");
     }
   };

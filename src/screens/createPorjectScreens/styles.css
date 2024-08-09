@@ -1,6 +1,5 @@
 
-/* DialogBox Css */
-/* src/styles/styles.css */
+/* DialogBox component Css */
 
 .dialog-overlay {
     position: fixed;
@@ -68,4 +67,104 @@
 
 .create-button:hover {
     background-color: #6b21a8;
+}
+
+
+/* all project component */
+
+.all-project-container {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+    gap: 8px;
+    margin: 0 10rem;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.projects-title {
+    font-size: 3rem;
+    color: #7E22CE;
+    /* Adjust this to match your "bluetextcolor1" */
+    font-weight: bold;
+}
+
+.create-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    color: white;
+    background-color: black;
+    gap: 1rem;
+    font-size: 1rem;
+    border-radius: 0.375rem;
+    padding: 8px;
+}
+
+.projects-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 0;
+    overflow: auto;
+}
+
+
+/* AddProjectHome component CSS */
+
+.add-project-home-container {
+    padding: 0.5rem 5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.create-project-title {
+    font-size: 4rem;
+    color: #7E22CE;
+    /* bluetextcolor1 */
+    font-weight: bold;
+    -webkit-text-stroke: 1px #000000;
+    /* black */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.home-vector {
+    height: 18rem;
+    width: 18rem;
+}
+
+.create-project-description {
+    padding: 0 8rem;
+    color: #838383;
+    /* greaytextcolor2 */
+    font-size: 1.125rem;
+}
+
+.create-project-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    color: #F8F8F8;
+    /* whitetextcolor3 */
+    background-color: #211935;
+    /* blackbackground */
+    gap: 1rem;
+    font-size: 1.125rem;
+    border-radius: 0.375rem;
+    padding: 1rem;
+}
+
+.create-project-button:hover {
+    background-color: #3C3C3C;
+    /* blacktextcolor3 */
 }
