@@ -57,7 +57,7 @@ import "./styles.css";
 
 function AddProjectHome() {
   const { isDialogOpen, handleOpenDialog } = useContext(ProjectContext);
-
+   
   return (
     <>
       <div className="add-project-home-container">

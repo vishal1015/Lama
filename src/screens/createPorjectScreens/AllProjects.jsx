@@ -54,35 +54,26 @@
 
 // export default AllProject;
 
+import  { useContext } from "react";
 import ProjectCard from "../../components/projectCard/ProjectCard";
 import { HiOutlinePlusCircle } from "react-icons/hi";
 import { ProjectContext } from "./ProjectHomeScreen";
-import { useContext } from "react";
 import DialogBox from "./DialogBox";
 import { useNavigate } from "react-router";
 import * as projectConstants from "../../utils/Constants";
 import "./styles.css";
+// import useProjects from "../../hooks/useProjects";
 
-// for handle project form backedn call api
-// import axios from "axios";
-
-// const data = async() => {
-//       try {
-//        const res = await axios.get("http://localhost:5000/project/get");
-//        const projects = res.data;
-//        console.log("projects are: ", projects);
-//      } catch (e) {
-//        console.log("Error in getting projects: ", e.message);
-//      }
-//    };
 const AllProject = () => {
-  const { handleOpenDialog, isDialogOpen, projectNames } =
-    useContext(ProjectContext);
+  const { handleOpenDialog, isDialogOpen ,projectNames } = useContext(ProjectContext);
   const navigate = useNavigate();
+  // const { projects, loading } = useProjects();
 
   const handleNavigation = () => {
     navigate("/app");
   };
+
+  // if (loading) return <p>Loading projects...</p>;
 
   return (
     <div>
@@ -98,9 +89,16 @@ const AllProject = () => {
           </div>
         </div>
         <div className="projects-list" onClick={handleNavigation}>
-          {projectNames.map((name, index) => (
-            <ProjectCard key={index} ProjectName={name} />
-          ))}
+          {projectNames.length > 0 ? (
+            projectNames.map((project) => (
+              <ProjectCard
+                key={project._id}
+                ProjectName={project.projectName}
+              />
+            ))
+          ) : (
+            <p>No projects found.</p>
+          )}
         </div>
       </div>
     </div>

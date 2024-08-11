@@ -1,29 +1,58 @@
-import  { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import HomeHeader from "../../components/creatProjectHomeHeader/HomeHeader";
 import AllProject from "./AllProjects";
 import AddProjectHome from "./AddProjectHome";
-// import axios from "axios";
+import axios from "axios";
 
 export const ProjectContext = createContext();
 
 // Create a provider component
- const ProjectHomeScreen = () => {
+const ProjectHomeScreen = () => {
   const [isHome, setIsHome] = useState(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [projectNames, setProjectNames] = useState([]);
   const [currentProjectName, setCurrentProjectName] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-//   const navigate = useNavigate();
+  //   const navigate = useNavigate();
 
-    // const data = async () => {
-    //   try {
-    //     const res = await axios.get("http://localhost:5000/project/get");
-    //     const projects = res.data;
-    //     console.log("projects are: ", projects);
-    //   } catch (e) {
-    //     console.log("Error in getting projects: ", e.message);
-    //   }
-    // };
+  // Attempt to retrieve userId from URL params
+  const { userId: routeUserId } = useParams();
+
+  // Or get it from localStorage as a fallback
+  const userId = routeUserId || localStorage.getItem("userId");
+  console.log(userId);
+
+  const createProject = async (projectName) => {
+    try {
+      const response = await axios.post(
+        `http://localhost:5000/api/users/${userId}/projects`,
+        { projectName }
+      );
+      console.log("Project created:", response.data);
+    } catch (error) {
+      console.error("Error creating project:", error.message);
+    }
+  };
+
+  const getProject = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/api/users/${userId}/projects`
+      );
+      console.log("Project recived:", response.data);
+      // setProjectNames(response.data);
+      return response.data;
+    } catch (error) {
+      console.error("Error while getting project:", error.message);
+    }
+  };
+
+  useEffect(()=>{
+    setProjectNames(getProject());
+  },[])
+   
+
   const handleOpenDialog = () => {
     setIsDialogOpen(true);
   };
@@ -35,36 +64,37 @@ export const ProjectContext = createContext();
   };
 
   const handleSubmit = () => {
+
     if (currentProjectName.trim() === "") {
       setErrorMessage("Please enter a project name");
     } else {
-      setProjectNames([...projectNames, currentProjectName]);
+      console.log("Begore upadting state" + projectNames.length);
+      createProject(currentProjectName);
+      console.log("return value from get"+ getProject());
+      setProjectNames(getProject());
+      console.log("After updating state "+ projectNames.length);
       handleCloseDialog();
-      // data();
       if (isHome) setIsHome(false);
-    //   navigate("/all-project");
     }
   };
 
-   const contextValues = {
-     isDialogOpen,
-     projectNames,
-     currentProjectName,
-     errorMessage,
-     setIsDialogOpen,
-     setProjectNames,
-     setCurrentProjectName,
-     setErrorMessage,
-     handleOpenDialog,
-     handleCloseDialog,
-     handleSubmit,
-   };
+  const contextValues = {
+    isDialogOpen,
+    projectNames,
+    currentProjectName,
+    errorMessage,
+    setIsDialogOpen,
+    setProjectNames,
+    setCurrentProjectName,
+    setErrorMessage,
+    handleOpenDialog,
+    handleCloseDialog,
+    handleSubmit,
+  };
   return (
     <div>
       <HomeHeader />
-      <ProjectContext.Provider
-        value={contextValues}
-      >
+      <ProjectContext.Provider value={contextValues}>
         {isHome ? <AddProjectHome /> : <AllProject />}
       </ProjectContext.Provider>
     </div>
