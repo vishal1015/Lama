@@ -3,7 +3,7 @@ import { SketchPicker } from "react-color"; // Import the color picker from reac
 import "./styles.css"; // Import any custom styles
 
 const ColorPicker = () => {
-  const [color, setColor] = useState("#ffffff"); // Default color
+  const [color, setColor] = useState("#7E22CE"); // Default color
   const [displayColorPicker, setDisplayColorPicker] = useState(false);
 
   const handleInputChange = (event) => {
@@ -25,7 +25,7 @@ const ColorPicker = () => {
         value={color}
         onChange={handleInputChange}
         className="color-input"
-        placeholder="#ffffff"
+        placeholder="#7E22CE"
       />
       <div
         className="color-box"

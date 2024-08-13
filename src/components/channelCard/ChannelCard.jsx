@@ -24,9 +24,9 @@
 
 import "./styles.css"; // Import your vanilla CSS file
 
-const ChannelCard = ({ imgSrc, text1, text2 }) => {
+const ChannelCard = ({ imgSrc, text1, text2 ,onClick}) => {
   return (
-    <div className="channel-card-container">
+    <div className="channel-card-container" onClick={onClick}>
       <div className="channel-card-image-container">
         <img src={imgSrc} alt="" className="channel-card-image" />
       </div>

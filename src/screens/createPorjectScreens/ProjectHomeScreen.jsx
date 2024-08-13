@@ -63,20 +63,42 @@ const ProjectHomeScreen = () => {
     setErrorMessage("");
   };
 
-  const handleSubmit = () => {
-
+  const handleSubmit = async () => {
     if (currentProjectName.trim() === "") {
       setErrorMessage("Please enter a project name");
     } else {
-      console.log("Begore upadting state" + projectNames.length);
-      createProject(currentProjectName);
-      console.log("return value from get"+ getProject());
-      setProjectNames(getProject());
-      console.log("After updating state "+ projectNames.length);
-      handleCloseDialog();
-      if (isHome) setIsHome(false);
+      try {
+        console.log("Before creating project");
+
+        // Wait for the project to be created
+        await createProject(currentProjectName);
+
+        console.log("Project created successfully");
+
+        // Now, get the updated list of projects
+        const updatedProjects = await getProject();
+
+        console.log("Updated projects received");
+
+        // Update the state with the new list of projects
+        setProjectNames(updatedProjects);
+
+        console.log("State updated with new projects");
+
+        // Close the dialog box
+        handleCloseDialog();
+
+        // Navigate to the projects list if currently on the home screen
+        if (isHome) setIsHome(false);
+      } catch (error) {
+        console.error(
+          "Error during project creation and retrieval:",
+          error.message
+        );
+      }
     }
   };
+
 
   const contextValues = {
     isDialogOpen,

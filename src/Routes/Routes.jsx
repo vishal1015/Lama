@@ -2,7 +2,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 // import HomePage from "../screens/HomePage";
 // import AddProjectHome from "../screens/createPorjectScreens/AddProjectHome";
-import AllProject from "../screens/createPorjectScreens/AllProjects";
+// import AllProject from "../screens/createPorjectScreens/AllProjects";
 import Layout from "../Layout/appLayout/Layout";
 import Upload from "../screens/uploadFLowScreen/Upload";
 import AccountSetting from "../screens/accountSettingScreen/AccountSetting";
@@ -22,12 +22,15 @@ const AppRoutes = () => {
         <Route path="/register" element={<RegisterPage />} />
         {/* <Route path="add-project" element={<ProjectHomeScreen />} /> */}
         <Route path="/add-project/:userId" element={<ProjectHomeScreen />} />
-        <Route path="all-project" element={<AllProject />} />
-        <Route path="app" element={<Layout />}>
-          <Route path="/app" element={<Upload />} />
+        {/* <Route path="all-project" element={<AllProject />} /> */}
+        <Route path="/add-project/:userId/app/:projectId" element={<Layout />}>
+          <Route
+            path="/add-project/:userId/app/:projectId"
+            element={<Upload />}
+          />
           <Route path="account-setting" element={<AccountSetting />} />
           <Route path="configurations" element={<Configuration />} />
-          <Route path="edit-transcript" element={<EditTranscriptScreen />} />
+          <Route path="edit-transcript/:fileId" element={<EditTranscriptScreen />} />
           <Route path="sample" element={<SampleProject />} />
         </Route>
       </Routes>

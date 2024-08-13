@@ -1,73 +1,110 @@
-import  { useState } from "react";
-import {
-  useNavigate,
-} from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 // import EditScreen from "./EditScreen";
-import './styles.css'
-const initialData = [
-  {
-    id: 1,
-    name: "Project A",
-    uploadDateTime: "2024-08-06 12:00",
-    status: "Done",
-  },
-  {
-    id: 2,
-    name: "Project B",
-    uploadDateTime: "2024-08-06 13:00",
-    status: "Done",
-  },
-  {
-    id: 3,
-    name: "Project c",
-    uploadDateTime: "2024-08-06 13:00",
-    status: "Done",
-  },
-  {
-    id: 4,
-    name: "Project D",
-    uploadDateTime: "2024-08-06 13:00",
-    status: "Done",
-  },
-  {
-    id: 5,
-    name: "Project E",
-    uploadDateTime: "2024-08-06 13:00",
-    status: "Done",
-  },
-  {
-    id: 6,
-    name: "Project F",
-    uploadDateTime: "2024-08-06 13:00",
-    status: "Done",
-  },
-  {
-    id: 7,
-    name: "Project G",
-    uploadDateTime: "2024-08-06 13:00",
-    status: "Done",
-  },
-  {
-    id: 8,
-    name: "Project F",
-    uploadDateTime: "2024-08-06 13:00",
-    status: "Done",
-  },
-  // Add more initial data as needed
-];
+import "./styles.css";
+import axios from "axios";
+
+// const initialfiles = [
+//   {
+//     id: 1,
+//     name: "Project A",
+//     uploadDateTime: "2024-08-06 12:00",
+//     status: "Done",
+//   },
+//   {
+//     id: 2,
+//     name: "Project B",
+//     uploadDateTime: "2024-08-06 13:00",
+//     status: "Done",
+//   },
+//   {
+//     id: 3,
+//     name: "Project c",
+//     uploadDateTime: "2024-08-06 13:00",
+//     status: "Done",
+//   },
+//   {
+//     id: 4,
+//     name: "Project D",
+//     uploadDateTime: "2024-08-06 13:00",
+//     status: "Done",
+//   },
+//   {
+//     id: 5,
+//     name: "Project E",
+//     uploadDateTime: "2024-08-06 13:00",
+//     status: "Done",
+//   },
+//   {
+//     id: 6,
+//     name: "Project F",
+//     uploadDateTime: "2024-08-06 13:00",
+//     status: "Done",
+//   },
+//   {
+//     id: 7,
+//     name: "Project G",
+//     uploadDateTime: "2024-08-06 13:00",
+//     status: "Done",
+//   },
+//   {
+//     id: 8,
+//     name: "Project F",
+//     uploadDateTime: "2024-08-06 13:00",
+//     status: "Done",
+//   },
+//   Add more initial files as needed
+// ];
+
 
 const TableComponent = () => {
-  const [data, setData] = useState(initialData);
+  const [files, setfiles] = useState([]);
   const navigate = useNavigate();
+  const { userId, projectId } = useParams();
 
-  const handleDelete = (id) => {
-    const newData = data.filter((item) => item.id !== id);
-    setData(newData);
+  const getFiles = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/api/users/${userId}/projects/${projectId}/files`
+      );
+      console.log("Files:", response.data);
+      // setProjectNames(response.data);
+      return response.data;
+    } catch (error) {
+      console.error("Error while getting Files:", error.message);
+    }
   };
 
-  const handleEdit = (id) => {
-    navigate(`/app/edit-transcript`);
-    console.log(` ${id} went to edit page`);
+  const deletFile = async (fileId) =>{
+    try{
+       const response = await axios.delete(
+         `http://localhost:5000/api/users/${userId}/projects/${projectId}/files/${fileId}`
+       );
+       console.log(`file deletion mess ${response}`)
+    }catch(error){
+      console.log(`error in deleting file ${error}`)
+    }
+  }
+
+useEffect(() => {
+  const fetchFiles = async () => {
+    const fetchedFiles = await getFiles();
+    setfiles(fetchedFiles);
+  };
+  fetchFiles();
+}, []);
+
+  console.log(files);
+
+  const handleDelete = async(fileId) => {
+      await deletFile(fileId);
+      const newfiles = await  getFiles();
+      setfiles(newfiles);
+  };
+
+  const handleEdit = (fileId) => {
+    navigate(`/add-project/${userId}/app/${projectId}/edit-transcript/${fileId}`);
+    console.log(` ${fileId} went to edit page`);
   };
 
   return (
@@ -83,31 +120,31 @@ const TableComponent = () => {
             </tr>
           </thead>
 
-        <tbody>
-          {data.map((item) => (
-            <tr key={item.id}>
-              <td className="py-2 px-4 border-b">{item.name}</td>
-              <td className="py-2 px-4 border-b">{item.uploadDateTime}</td>
-              <td className="py-2 px-4 border-b">{item.status}</td>
-              <td className="py-2 px-4 border-b">
-                <button
-                  className=" text-black px-2 py-1 rounded-s  border-gray-300 border"
-                  onClick={() => handleEdit(item.id)}
-                >
-                  Edit
-                </button>
-                <button
-                  className=" text-red-500 px-2 py-1 rounded-e border-gray-300 border"
-                  onClick={() => handleDelete(item.id)}
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+          <tbody>
+            {files.map((item) => (
+              <tr key={item._id}>
+                <td className="py-2 px-4 border-b">{item.name}</td>
+                <td className="py-2 px-4 border-b">{item.updatedAt}</td>
+                <td className="py-2 px-4 border-b">Done</td>
+                <td className="py-2 px-4 border-b">
+                  <button
+                    className=" text-black px-2 py-1 rounded-s  border-gray-300 border"
+                    onClick={() => handleEdit(item._id)}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    className=" text-red-500 px-2 py-1 rounded-e border-gray-300 border"
+                    onClick={() => handleDelete(item._id)}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

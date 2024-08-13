@@ -1,11 +1,40 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GrEdit } from "react-icons/gr";
-import { IoIosSearch } from "react-icons/io";
+import { IoIosConstruct, IoIosSearch } from "react-icons/io";
+import { useParams } from "react-router";
+import axios from "axios";
 import "./styles.css"; 
 
 const EditTranscriptScreen = () => {
 
     const [isEditMode, setIsEditMode] = useState(false);
+     const [text, setText] = useState("Your initial text here");
+     const [inputValue, setInputValue] = useState(text);
+     const { userId, projectId, fileId } = useParams();
+
+     const getFilesDescription = async () => {
+       try {
+         const response = await axios.get(
+           `http://localhost:5000/api/users/${userId}/projects/${projectId}/files/${fileId}`
+         );
+         console.log("Files:", response.data.description);
+         console.log(typeof response.data.description);
+         return response.data.description;
+       } catch (error) {
+         console.error("Error while getting File information:", error.message);
+       }
+     };
+
+    //  const updatetext = async () => {
+    //    try {
+    //      const response = await axios.delete(
+    //        `http://localhost:5000/api/users/${userId}/projects/${projectId}/files/${fileId}`
+    //      );
+    //      console.log(`file deletion mess ${response}`);
+    //    } catch (error) {
+    //      console.log(`error in deleting file ${error}`);
+    //    }
+    //  };
 
     const handleEditMode  = ()=>{
         setIsEditMode(true);
@@ -13,13 +42,26 @@ const EditTranscriptScreen = () => {
     const handleDiscardButton = ()=>{
         setIsEditMode(false);
     }
+    const handleSave = () =>{
+         setText(inputValue);
+         setIsEditMode(false);
+    }
+      const handleChange = (e) => {
+        setInputValue(e.target.value);
+      };
+    useEffect(()=>{
+      const fetchfiledis = async() =>{
+        const Description = await getFilesDescription();
+        setText(Description);
+      }
+       fetchfiledis();
+    })
   return (
     <>
-      <div className=" px-8 ">
+      <div className="px-8">
         <div className=" flex justify-between items-center">
           <h1 className=" text-4xl text-bluetextcolor1 font-bold ">
-            {" "}
-            Edit Transcript{" "}
+            Edit Transcript
           </h1>
           {isEditMode ? (
             <div className=" flex gap-4 items-center">
@@ -29,7 +71,11 @@ const EditTranscriptScreen = () => {
               >
                 DisCard
               </button>
-              <button className=" bg-black text-white  font-bold px-4 rounded-md py-2 ">
+              <button
+                className=" bg-black text-white  font-bold px-4 rounded-md
+               py-2 "
+                onClick={handleSave}
+              >
                 Save & exit
               </button>
             </div>
@@ -49,10 +95,34 @@ const EditTranscriptScreen = () => {
             </div>
           </div>
           <h3 className=" font-bold text-purple-700  text-xl m-2">Speaker</h3>
-          <div className="  custom-scrollbar h-96">
-            <p className="  text-lg  leading-relaxed cursor-text ">
-              {Array(1000).fill("This is a long paragraph. ").join("")}
-            </p>
+          {/* <div className=" custom-scrollbar h-96 "> */}
+          <div className=
+            {`custom-scrollbar h-96 ${
+              isEditMode ? "overflow-hidden" : "overflow-auto"
+            }`}>
+            {isEditMode ? (
+              <>
+                <textarea
+                  value={inputValue}
+                  onChange={handleChange}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    boxSizing: "border-box",
+                    padding: "8px",
+                    resize: "none",
+                    border: "none",
+                    outline: "none",
+                    fontSize: "16px",
+                    lineHeight: "1.5",
+                  }}
+                />
+              </>
+            ) : (
+              <>
+                <p>{text}</p>
+              </>
+            )}
           </div>
         </div>
       </div>

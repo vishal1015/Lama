@@ -63,7 +63,7 @@
 
 // export default Sidebar;
 
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate ,useParams } from "react-router-dom";
 import LamaIcon from "/lamaIcon.png";
 import { IoMdSettings } from "react-icons/io";
 import "./styles.css";
@@ -71,7 +71,7 @@ import "./styles.css";
 const Sidebar = () => {
   const location = useLocation();
   const navigate = useNavigate();
-
+  const {userId, projectId} = useParams();
   const isActive = (path) =>{ console.log(path); location.pathname === path;}
 
   const handleNavigate = (path) => {
@@ -97,7 +97,9 @@ const Sidebar = () => {
                 ? "text-white bg-purple-600"
                 : "text-black hover:text-white hover:bg-purple-600"
             }`}
-            onClick={() => handleNavigate("/app")}
+            onClick={() =>
+              handleNavigate(`/add-project/${userId}/app/${projectId}`)
+            }
           >
             <div className="rounded-full inner flex p-3 relative">
               <div className="w-1 h-1 rounded-full flex justify-center items-center">
@@ -112,7 +114,11 @@ const Sidebar = () => {
                 ? "text-white bg-purple-600"
                 : "text-black hover:text-white hover:bg-purple-600"
             }`}
-            onClick={() => handleNavigate("/app/configurations")}
+            onClick={() =>
+              handleNavigate(
+                `/add-project/${userId}/app/${projectId}/configurations`
+              )
+            }
           >
             <div className="rounded-full inner flex p-3 relative">
               <div className="w-1 h-1 rounded-full flex justify-center items-center">
@@ -158,7 +164,11 @@ const Sidebar = () => {
               ? "text-white bg-purple-600"
               : "text-black hover:text-white hover:bg-purple-600"
           }`}
-          onClick={() => handleNavigate("/app/account-setting")}
+          onClick={() =>
+            handleNavigate(
+              `/add-project/${userId}/app/${projectId}/account-setting`
+            )
+          }
         >
           <div className="w-6 h-6 rounded-full flex justify-center bg-gray-300 items-center">
             <IoMdSettings />
