@@ -4,6 +4,7 @@ import HomeHeader from "../../components/creatProjectHomeHeader/HomeHeader";
 import AllProject from "./AllProjects";
 import AddProjectHome from "./AddProjectHome";
 import axios from "axios";
+import { BeatLoader } from "react-spinners";
 
 export const ProjectContext = createContext();
 
@@ -15,6 +16,7 @@ const ProjectHomeScreen = () => {
   const [currentProjectName, setCurrentProjectName] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   //   const navigate = useNavigate();
+  const [ isLoading , setIsLoading ] = useState(false);
 
   // Attempt to retrieve userId from URL params
   const { userId: routeUserId } = useParams();
@@ -24,7 +26,8 @@ const ProjectHomeScreen = () => {
   console.log(userId);
 
   const createProject = async (projectName) => {
-    try {
+
+    try {      
       const response = await axios.post(
         `http://localhost:5000/api/users/${userId}/projects`,
         { projectName }
@@ -36,21 +39,39 @@ const ProjectHomeScreen = () => {
   };
 
   const getProject = async () => {
+    console.log(userId);
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/users/${userId}/projects`
+        `http://localhost:5000/api/users/${userId}/projects`,
       );
       console.log("Project recived:", response.data);
       // setProjectNames(response.data);
       return response.data;
     } catch (error) {
+      console.log('hare krishna');
       console.error("Error while getting project:", error.message);
     }
   };
 
   useEffect(()=>{
+
     setProjectNames(getProject());
+
   },[])
+    // useEffect(() => {
+    //   const fetchProjects = async () => {
+    //     try {
+    //       const projects = await getProject();
+    //       setProjectNames(projects);
+    //     } catch (error) {
+    //       console.error("Error fetching projects:", error.message);
+    //     } finally {
+    //       setIsLoading(false); // Set loading to false after data is fetched
+    //     }
+    //   };
+
+    //   fetchProjects();
+    // }, []);
    
 
   const handleOpenDialog = () => {
@@ -64,6 +85,8 @@ const ProjectHomeScreen = () => {
   };
 
   const handleSubmit = async () => {
+    console.log(isLoading+ "what is loading ");
+    setIsLoading(true);
     if (currentProjectName.trim() === "") {
       setErrorMessage("Please enter a project name");
     } else {
@@ -72,7 +95,7 @@ const ProjectHomeScreen = () => {
 
         // Wait for the project to be created
         await createProject(currentProjectName);
-
+        // setIsLoading(false);
         console.log("Project created successfully");
 
         // Now, get the updated list of projects
@@ -112,12 +135,14 @@ const ProjectHomeScreen = () => {
     handleOpenDialog,
     handleCloseDialog,
     handleSubmit,
+    isLoading,
+    setIsLoading,
   };
   return (
     <div>
       <HomeHeader />
       <ProjectContext.Provider value={contextValues}>
-        {isHome ? <AddProjectHome /> : <AllProject />}
+        {isHome ? <AddProjectHome /> :<AllProject /> }
       </ProjectContext.Provider>
     </div>
   );

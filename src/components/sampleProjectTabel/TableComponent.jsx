@@ -1,110 +1,33 @@
-import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-// import EditScreen from "./EditScreen";
 import "./styles.css";
 import axios from "axios";
-
-// const initialfiles = [
-//   {
-//     id: 1,
-//     name: "Project A",
-//     uploadDateTime: "2024-08-06 12:00",
-//     status: "Done",
-//   },
-//   {
-//     id: 2,
-//     name: "Project B",
-//     uploadDateTime: "2024-08-06 13:00",
-//     status: "Done",
-//   },
-//   {
-//     id: 3,
-//     name: "Project c",
-//     uploadDateTime: "2024-08-06 13:00",
-//     status: "Done",
-//   },
-//   {
-//     id: 4,
-//     name: "Project D",
-//     uploadDateTime: "2024-08-06 13:00",
-//     status: "Done",
-//   },
-//   {
-//     id: 5,
-//     name: "Project E",
-//     uploadDateTime: "2024-08-06 13:00",
-//     status: "Done",
-//   },
-//   {
-//     id: 6,
-//     name: "Project F",
-//     uploadDateTime: "2024-08-06 13:00",
-//     status: "Done",
-//   },
-//   {
-//     id: 7,
-//     name: "Project G",
-//     uploadDateTime: "2024-08-06 13:00",
-//     status: "Done",
-//   },
-//   {
-//     id: 8,
-//     name: "Project F",
-//     uploadDateTime: "2024-08-06 13:00",
-//     status: "Done",
-//   },
-//   Add more initial files as needed
-// ];
-
+import { useContext } from "react";
+import { FileContext } from "../../screens/uploadFLowScreen/Upload";
 
 const TableComponent = () => {
-  const [files, setfiles] = useState([]);
+  const { files, onFileUpdate } = useContext(FileContext);
+ 
   const navigate = useNavigate();
-  const { userId, projectId } = useParams();
+  // const { userId, projectId } = useParams();
+     const userId = localStorage.getItem("userId");
+     const projectId = localStorage.getItem("projectId");
 
-  const getFiles = async () => {
+  const deleteFile = async (fileId) => {
     try {
-      const response = await axios.get(
-        `http://localhost:5000/api/users/${userId}/projects/${projectId}/files`
+      const response = await axios.delete(
+        `http://localhost:5000/api/users/${userId}/projects/${projectId}/files/${fileId}`
       );
-      console.log("Files:", response.data);
-      // setProjectNames(response.data);
-      return response.data;
+      console.log(`File deletion message: ${response}`);
+      onFileUpdate(); // Re-fetch the files after deletion
     } catch (error) {
-      console.error("Error while getting Files:", error.message);
+      console.log(`Error in deleting file: ${error}`);
     }
-  };
-
-  const deletFile = async (fileId) =>{
-    try{
-       const response = await axios.delete(
-         `http://localhost:5000/api/users/${userId}/projects/${projectId}/files/${fileId}`
-       );
-       console.log(`file deletion mess ${response}`)
-    }catch(error){
-      console.log(`error in deleting file ${error}`)
-    }
-  }
-
-useEffect(() => {
-  const fetchFiles = async () => {
-    const fetchedFiles = await getFiles();
-    setfiles(fetchedFiles);
-  };
-  fetchFiles();
-}, []);
-
-  console.log(files);
-
-  const handleDelete = async(fileId) => {
-      await deletFile(fileId);
-      const newfiles = await  getFiles();
-      setfiles(newfiles);
   };
 
   const handleEdit = (fileId) => {
-    navigate(`/add-project/${userId}/app/${projectId}/edit-transcript/${fileId}`);
-    console.log(` ${fileId} went to edit page`);
+    localStorage.setItem("fileId", fileId);
+    navigate(`/sample-project/transcript`);
+    console.log(`${fileId} went to edit page`);
   };
 
   return (
@@ -128,14 +51,14 @@ useEffect(() => {
                 <td className="py-2 px-4 border-b">Done</td>
                 <td className="py-2 px-4 border-b">
                   <button
-                    className=" text-black px-2 py-1 rounded-s  border-gray-300 border"
+                    className="text-black px-2 py-1 rounded-s border-gray-300 border"
                     onClick={() => handleEdit(item._id)}
                   >
                     Edit
                   </button>
                   <button
-                    className=" text-red-500 px-2 py-1 rounded-e border-gray-300 border"
-                    onClick={() => handleDelete(item._id)}
+                    className="text-red-500 px-2 py-1 rounded-e border-gray-300 border"
+                    onClick={() => deleteFile(item._id)}
                   >
                     Delete
                   </button>

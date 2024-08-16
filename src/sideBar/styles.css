@@ -1,3 +1,6 @@
 .outer:hover .inner {
     background-color: black;
 }
+.inner {
+    background-color: rgb(198, 194, 194);
+}

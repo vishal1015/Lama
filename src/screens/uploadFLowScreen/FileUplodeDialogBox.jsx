@@ -1,24 +1,24 @@
-
 import photo from "/photo2.jpg";
 
 import { FileContext } from "./Upload";
 import { useContext } from "react";
 
 const FileUploadDialogBox = () => {
-
-    const { 
-        handleCloseDialog,
-        fileName,
-         setFileName,
-         fileDiscription,
-          setfileDiscription,
-          errorMessage,
-          handleUpload
-        } = useContext(FileContext);
-
+  const {
+    handleCloseDialog,
+    fileName,
+    setFileName,
+    fileDiscription,
+    setfileDiscription,
+    errorMessage,
+    handleUpload,
+  } = useContext(FileContext);
+   console.log(handleCloseDialog,fileName);
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex
-       justify-center items-center z-50 ">
+    <div
+      className="fixed inset-0 bg-black bg-opacity-50 flex
+       justify-center items-center z-50 "
+    >
       <div className="bg-white px-8 py-4 rounded-md w-[45%] gap-2 ">
         <div className=" flex flex-row justify-between items-center gap-4 ">
           <div className=" flex flex-row items-center gap-4">

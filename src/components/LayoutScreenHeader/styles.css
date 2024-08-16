@@ -2,7 +2,7 @@
     width: 100%;
     background-color: white;
     border-radius: 0.5rem;
-    padding: 2.5rem 2.5rem;
+    padding: 2rem 2rem;
     display: flex;
     justify-content: space-between;
 }
@@ -19,6 +19,7 @@
 
 .path-text {
     font-weight: 600;
+    font-size: large;
     color: #838383;
     /* greaytextcolor2 */
 }
@@ -27,6 +28,7 @@
     color: #7E22CE;
     /* bluetextcolor1 */
     font-weight: 600;
+    font-size: large;
 }
 
 .options-container {

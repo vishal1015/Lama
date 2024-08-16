@@ -22,7 +22,7 @@ const RegisterPage = () => {
       console.log("User registered successfully:", response.data);
 
       // Redirect to login page after successful registration
-      navigate("/");
+      navigate("/login");
     } catch (err) {
       setError(err.response?.data?.message || "Something went wrong");
     }
@@ -73,7 +73,7 @@ const RegisterPage = () => {
         </form>
         <p className="mt-4 text-center">
           Already have an account?{" "}
-          <a href="/" className="text-indigo-500 hover:underline">
+          <a href="/login" className="text-indigo-500 hover:underline">
             Login
           </a>
         </p>

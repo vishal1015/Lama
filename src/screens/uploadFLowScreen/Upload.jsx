@@ -3,11 +3,13 @@ import cloud from "/cloud.png"
 import youtubeimg from "/youtube.png"
 import spotifyImg from "/spotyfi.png"
 import rssfeedImg from "/rssfeed.png"
-import { useState ,createContext, useContext} from "react";
+import { useState ,createContext, useContext ,useEffect} from "react";
 import ChannelCard from "../../components/channelCard/ChannelCard";
 import FileUploadDialogBox from "./FileUplodeDialogBox"
 import { useNavigate, useParams} from "react-router-dom";
 import axios from "axios"
+import SampleProject from "./SampleProject";
+
 
 export const FileContext = createContext();
 const Upload = () => {
@@ -15,9 +17,13 @@ const Upload = () => {
     const [fileName, setFileName] = useState("");
     const [fileDiscription , setfileDiscription] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
-     
+    const [isUploade, setIsUploade] = useState(true);
+    const [files, setFiles] = useState([]);
+
     const navigate = useNavigate();
-    const {userId, projectId} = useParams();
+    // const {userId, projectId} = useParams();
+    const userId = localStorage.getItem("userId");
+    const projectId = localStorage.getItem("projectId");
     
     const addFile = async (name,description) => {
       try {
@@ -44,6 +50,20 @@ const Upload = () => {
       }
     };
 
+      const fetchFiles = async () => {
+        const fechedfile = await getFiles();
+        setFiles(fechedfile);
+      };
+
+      useEffect(() => {
+        fetchFiles();
+      }, []);
+
+      // This function will be called after saving a file in the dialog
+      const onFileUpdate = () => {
+        fetchFiles(); // Re-fetch the files after an update
+      };
+
     const handleOpenDialog = () => {
       setIsDialogOpen(true);
     };
@@ -64,26 +84,32 @@ const Upload = () => {
         setErrorMessage("Please enter Project Link");
       } else {
         console.log("File name & discripiton:", fileName ,fileDiscription);
+        fetchFiles();
         handleCloseDialog();
         //save fils in db
         await addFile(fileName,fileDiscription);
-        navigate(`/add-project/${userId}/app/${projectId}/sample`);
+        // navigate(`/add-project/${userId}/app/${projectId}/sample`);
+         if(isUploade) setIsUploade(false);
       }
     }
    
    const contextvalue = {
-    isDialogOpen,
-    fileName,
-    fileDiscription,
-    errorMessage,
-    setErrorMessage,
-    setfileDiscription,
-    setFileName,
-    setIsDialogOpen,
+     isDialogOpen,
+     fileName,
+     fileDiscription,
+     errorMessage,
+     files,
+     setFiles,
+     setErrorMessage,
+     setfileDiscription,
+     setFileName,
+     setIsDialogOpen,
      addFile,
      getFiles,
      handleOpenDialog,
+     handleCloseDialog,
      handleUpload,
+     onFileUpdate,
    };
 
   return (
@@ -91,7 +117,7 @@ const Upload = () => {
       value ={contextvalue}
     >
       <div className=" flex flex-row px-8">
-        <UplodeComponent />
+        { isUploade ? <UplodeComponent />:<SampleProject/>}
         {isDialogOpen && <FileUploadDialogBox />}
       </div>
     </FileContext.Provider>
@@ -164,7 +190,7 @@ export default Upload;
       </div>
 
       <h1 className=" m-4 justify-center items-center text-lg flex">or</h1>
-      <div className="flex flex-col justify-center gap-3 items-center border-dotted border-gray border-4  rounded-lg text-xl px-8 py-4 mx-5">
+      <div className="flex flex-col justify-center gap-3 items-center border-dotted border-gray border-4  rounded-lg text-xl px-8 py-4 mx-5 mb-10">
         <img src={cloud} alt="" className=" w-20 h-20 " />
         <p>
           Select a file or drag and drop here (Podcast Media or Transcription
@@ -177,7 +203,6 @@ export default Upload;
           Select File
         </button>
       </div>
-      <button onClick={handleOpenDialog}>click</button>
     </div>
   );
  } 

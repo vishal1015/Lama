@@ -85,6 +85,11 @@
     padding: 0 24px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+.update-button:hover {
+    background-color: #f3f3f3;
+    color: #7E22CE;
+    border: 2px solid black;
+}
 
 .subscription-plan {
     display: flex;

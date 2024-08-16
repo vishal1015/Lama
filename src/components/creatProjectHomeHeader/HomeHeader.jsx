@@ -47,7 +47,7 @@ const HomeHeader = () => {
   const navigate = useNavigate();
 
   const goBack = () => {
-    navigate("/");
+    navigate("/home");
   };
 
   return (

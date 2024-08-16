@@ -21,7 +21,6 @@ const useProjects = () => {
         setLoading(false);
       }
     };
-
     fetchProjects();
   }, []); // Empty dependency array to run only on mount
 

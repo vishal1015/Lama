@@ -1,12 +1,13 @@
 /* eslint-disable react/no-unescaped-entities */
-import { useState } from "react";
+import { useState , useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import { GlobalContext } from "../GlobalContext";
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const { isLoggedIn, setIsLoggedIn } = useContext(GlobalContext);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
@@ -21,14 +22,18 @@ const LoginPage = () => {
         }
       );
 
-      // Accessing the user data from the response
-      const userId = response.data.user._id;
-      localStorage.setItem("userId", userId);
-
       console.log("User logged in successfully:", response.data);
-
+      console.log("id" + response.data.user._id);
+      console.log("email" + response.data.user.email);
+      console.log("username" + response.data.user.username);
+      localStorage.setItem("userId", response.data.user._id);
+      localStorage.setItem("email", response.data.user.email);
+      localStorage.setItem("username", response.data.user.username);
+      console.log(isLoggedIn)
+      setIsLoggedIn(true);
+      console.log(isLoggedIn);
       // After successful login, redirect to the add-project page
-      navigate(`/add-project/${userId}`);
+      navigate(`/`);
     } catch (err) {
       setError(err.response?.data?.message || "Invalid credentials");
     }

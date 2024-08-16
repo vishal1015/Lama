@@ -1,127 +1,127 @@
 import { useEffect, useState } from "react";
 import { GrEdit } from "react-icons/gr";
-import { IoIosConstruct, IoIosSearch } from "react-icons/io";
-import { useParams } from "react-router";
+import { IoIosSearch } from "react-icons/io";
 import axios from "axios";
-import "./styles.css"; 
+import "./styles.css";
 
 const EditTranscriptScreen = () => {
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [text, setText] = useState(""); // Start with an empty string
+  const [inputValue, setInputValue] = useState(""); // Start with an empty string
+  const userId = localStorage.getItem("userId");
+  const projectId = localStorage.getItem("projectId");
+  const fileId = localStorage.getItem("fileId");
 
-    const [isEditMode, setIsEditMode] = useState(false);
-     const [text, setText] = useState("Your initial text here");
-     const [inputValue, setInputValue] = useState(text);
-     const { userId, projectId, fileId } = useParams();
-
-     const getFilesDescription = async () => {
-       try {
-         const response = await axios.get(
-           `http://localhost:5000/api/users/${userId}/projects/${projectId}/files/${fileId}`
-         );
-         console.log("Files:", response.data.description);
-         console.log(typeof response.data.description);
-         return response.data.description;
-       } catch (error) {
-         console.error("Error while getting File information:", error.message);
-       }
-     };
-
-    //  const updatetext = async () => {
-    //    try {
-    //      const response = await axios.delete(
-    //        `http://localhost:5000/api/users/${userId}/projects/${projectId}/files/${fileId}`
-    //      );
-    //      console.log(`file deletion mess ${response}`);
-    //    } catch (error) {
-    //      console.log(`error in deleting file ${error}`);
-    //    }
-    //  };
-
-    const handleEditMode  = ()=>{
-        setIsEditMode(true);
+  const getFilesDescription = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/api/users/${userId}/projects/${projectId}/files/${fileId}`
+      );
+      console.log("Files:", response.data.description);
+      return response.data.description;
+    } catch (error) {
+      console.error("Error while getting File information:", error.message);
     }
-    const handleDiscardButton = ()=>{
-        setIsEditMode(false);
+  };
+
+  const handleEditMode = () => {
+    setInputValue(text); // Set the current text to inputValue
+    setIsEditMode(true);
+  };
+
+  const handleDiscardButton = () => {
+    setIsEditMode(false);
+    setInputValue(text); // Revert inputValue to the current text
+  };
+
+  const handleSave = async () => {
+    try {
+      await axios.put(
+        `http://localhost:5000/api/users/${userId}/projects/${projectId}/files/${fileId}`,
+        { description: inputValue }
+      );
+      setText(inputValue); // Update text with the new input value
+      setIsEditMode(false);
+    } catch (error) {
+      console.error("Error while saving the file description:", error.message);
     }
-    const handleSave = () =>{
-         setText(inputValue);
-         setIsEditMode(false);
-    }
-      const handleChange = (e) => {
-        setInputValue(e.target.value);
-      };
-    useEffect(()=>{
-      const fetchfiledis = async() =>{
-        const Description = await getFilesDescription();
-        setText(Description);
-      }
-       fetchfiledis();
-    })
+    alert('file edited successfully');
+  };
+
+  const handleChange = (e) => {
+    setInputValue(e.target.value); // Update inputValue with the current input
+  };
+
+  useEffect(() => {
+    const fetchfiledis = async () => {
+      const Description = await getFilesDescription();
+      setText(Description);
+      setInputValue(Description); // Initialize inputValue with fetched description
+    };
+    fetchfiledis();
+  }, [userId, projectId, fileId]);
+
   return (
     <>
       <div className="px-8">
-        <div className=" flex justify-between items-center">
-          <h1 className=" text-4xl text-bluetextcolor1 font-bold ">
+        <div className="flex justify-between items-center">
+          <h1 className="text-4xl text-bluetextcolor1 font-bold">
             Edit Transcript
           </h1>
           {isEditMode ? (
-            <div className=" flex gap-4 items-center">
+            <div className="flex gap-4 items-center">
               <button
-                className=" border-2 border-red-500 text-red-500 px-4 rounded-md font-bold py-2 "
+                className="border-2 border-red-500 text-red-500 px-4 rounded-md font-bold py-2"
                 onClick={handleDiscardButton}
               >
-                DisCard
+                Discard
               </button>
               <button
-                className=" bg-black text-white  font-bold px-4 rounded-md
-               py-2 "
+                className="bg-black text-white font-bold px-4 rounded-md py-2"
                 onClick={handleSave}
               >
-                Save & exit
+                Save & Exit
               </button>
             </div>
           ) : null}
         </div>
-        <div className=" border-2 border-purple-900 rounded-lg h-full px-8 my-10 py-4 flex flex-col ">
-          <div className=" flex justify-between items-center ">
+        <div className="border-2 border-purple-900 rounded-lg h-full px-8 my-10 py-4 flex flex-col">
+          <div className="flex justify-between items-center">
             <button
-              className=" flex gap-1 justify-center items-center font-semibold text-white bg-gray-800 rounded-2xl px-4 py-1 "
+              className="flex gap-1 justify-center items-center font-semibold text-white bg-gray-800 rounded-2xl px-4 py-1"
               onClick={handleEditMode}
             >
               <GrEdit />
-              edit mode
+              Edit Mode
             </button>
-            <div className=" justify-center flex w-6 h-6 rounded-full bg-purple-300 border-2 border-purple-600  cursor-pointer">
+            <div className="justify-center flex w-6 h-6 rounded-full bg-purple-300 border-2 border-purple-600 cursor-pointer">
               <IoIosSearch />
             </div>
           </div>
-          <h3 className=" font-bold text-purple-700  text-xl m-2">Speaker</h3>
-          {/* <div className=" custom-scrollbar h-96 "> */}
-          <div className=
-            {`custom-scrollbar h-96 ${
+          <h3 className="font-bold text-purple-700 text-xl m-2">Speaker</h3>
+          <div
+            className={`custom-scrollbar h-96 ${
               isEditMode ? "overflow-hidden" : "overflow-auto"
-            }`}>
+            }`}
+          >
             {isEditMode ? (
-              <>
-                <textarea
-                  value={inputValue}
-                  onChange={handleChange}
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    boxSizing: "border-box",
-                    padding: "8px",
-                    resize: "none",
-                    border: "none",
-                    outline: "none",
-                    fontSize: "16px",
-                    lineHeight: "1.5",
-                  }}
-                />
-              </>
+              <textarea
+                value={inputValue}
+                onChange={handleChange}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  boxSizing: "border-box",
+                  padding: "8px",
+                  resize: "none",
+                  border: "none",
+                  outline: "none",
+                  fontSize: "16px",
+                  lineHeight: "1.5",
+                }}
+              />
             ) : (
-              <>
-                <p>{text}</p>
-              </>
+              <p>{text}</p>
             )}
           </div>
         </div>
@@ -129,4 +129,5 @@ const EditTranscriptScreen = () => {
     </>
   );
 };
+
 export default EditTranscriptScreen;

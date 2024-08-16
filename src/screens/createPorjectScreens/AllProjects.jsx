@@ -13,11 +13,13 @@ const AllProject = () => {
   const { handleOpenDialog, isDialogOpen ,projectNames } = useContext(ProjectContext);
   const navigate = useNavigate();
   // const { projects, loading } = useProjects();
-  const { userId } = useParams();
+  // const { userId } = useParams();
+  const userId = localStorage.getItem("userId");
          const handleNavigation = (projectId) => {
            console.log(`handleNavigation is running and pid${projectId}`);
           //  navigate("/app");
-           navigate(`/add-project/${userId}/app/${projectId}`);
+           localStorage.setItem("projectId", projectId)
+           navigate(`/sample-project/upload`);
          };
 
   // if (loading) return <p>Loading projects...</p>;

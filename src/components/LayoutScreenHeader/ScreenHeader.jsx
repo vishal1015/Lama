@@ -1,21 +1,23 @@
 
-import HomeIcon from "/homeIcon.png";
 import BellIcon from "/bellIcon.png";
 import Photo from "/photo2.jpg";
 import { GoTriangleDown } from "react-icons/go";
 import "./styles.css";
 import { useContext, useState } from "react";
 import { GlobalContext } from "../../GlobalContext";
+import BreadCrum from "./BreadCrum"
+
 const ScreenHeader = () => {
 
   return (
     <>
       <header className="header-container">
         <div className="path-container">
-          <img src={HomeIcon} alt="" className="icon-small" />
+          {/* <img src={HomeIcon} alt="" className="icon-small" />
           <p className="path-text">
-            Path/app /<span className="upload-text"> upload</span>
-          </p>
+            Sample Project /<span className="upload-text"> Upload</span>
+          </p> */}
+          <BreadCrum />
         </div>
         <div className="options-container">
           <div className="language-container">
