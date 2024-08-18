@@ -3,6 +3,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { GlobalContext } from "../GlobalContext";
 import { PulseLoader } from "react-spinners";
+import { dbUri } from "../utils/Constants";
+
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,7 +18,7 @@ const LoginPage = () => {
       setIsLoading(true);
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/users/login",
+        `${dbUri}/api/users/login`,
         {
           email,
           password,

@@ -20,7 +20,7 @@ const AllProject = () => {
   };
 
   if (isLoading) return (
-    <div className=" justify-center items-center ">
+    <div className=" justify-center items-center flex ">
       <PulseLoader />
     </div>
   );

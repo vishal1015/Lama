@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { PulseLoader } from "react-spinners";
+import { dbUri } from "../utils/Constants";
 
 const RegisterPage = () => {
   const [username, setUsername] = useState("");
@@ -15,7 +16,7 @@ const RegisterPage = () => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const response = await axios.post("http://localhost:5000/api/users", {
+      const response = await axios.post(`${dbUri}/api/users`, {
         username,
         email,
         password,

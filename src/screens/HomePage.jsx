@@ -2,8 +2,6 @@ import { useNavigate } from "react-router-dom";
 import { useContext} from "react";
 import { GlobalContext } from "../GlobalContext";
 import lemaIcon from "/lamaIcon.png";
-// import backgroundImg from "/homeBg.jpg";
-// import BeatLoader from "react-spinners/BeatLoader";
 const Home = () => {
   const navigate = useNavigate();
 
@@ -24,7 +22,6 @@ const Home = () => {
 
   return (
     <div>
-      {/* Header Section */}
       <div className=" text-purple-700 bg-white p-4 flex justify-between shadow-md items-center">
         <h1 className="text-2xl font-bold flex ">
           {" "}

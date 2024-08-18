@@ -4,7 +4,7 @@ import axios from "axios";
 import { useContext } from "react";
 import { FileContext } from "../../screens/uploadFLowScreen/Upload";
 import { PulseLoader } from "react-spinners";
-
+import { dbUri } from "../../utils/Constants";
 const TableComponent = () => {
   const { files, onFileUpdate , isLoading ,setIsLoading } = useContext(FileContext);
  
@@ -16,7 +16,7 @@ const TableComponent = () => {
     setIsLoading(true);
     try {
       const response = await axios.delete(
-        `http://localhost:5000/api/users/${userId}/projects/${projectId}/files/${fileId}`
+        `${dbUri}/api/users/${userId}/projects/${projectId}/files/${fileId}`
       );
       console.log(`File deletion message: ${response}`);
       onFileUpdate(); // Re-fetch the files after deletion

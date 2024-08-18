@@ -1,3 +1,5 @@
+// backend uri 
+const dbUri = "https://lama-backend-bp3t.onrender.com"
 
 //global
  const lamaText = "LAMA.";
@@ -35,6 +37,7 @@ const upgradeButton = "Upgrade";
 const cancelSubscriptionText = "Cancel Subscription";
 
 export {
+  dbUri,
   createProjectText,
   enterProjectNameText,
   cancelText,

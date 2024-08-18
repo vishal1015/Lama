@@ -8,6 +8,7 @@ import ChannelCard from "../../components/channelCard/ChannelCard";
 import FileUploadDialogBox from "./FileUplodeDialogBox"
 import axios from "axios"
 import SampleProject from "./SampleProject";
+import { dbUri } from "../../utils/Constants";
 
 
 export const FileContext = createContext();
@@ -27,7 +28,7 @@ const Upload = () => {
       setIsLoading(true);
       try {
         const response = await axios.post(
-          `http://localhost:5000/api/users/${userId}/projects/${projectId}/files`,
+          `${dbUri}/api/users/${userId}/projects/${projectId}/files`,
           { name, description }
         );
         console.log("File Added:", response.data);
@@ -41,7 +42,7 @@ const Upload = () => {
       setIsLoading(true);
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/users/${userId}/projects/${projectId}/files`
+          `${dbUri}/api/users/${userId}/projects/${projectId}/files`
         );
         console.log("Files recived:", response.data);
         // setFileNames(response.data);

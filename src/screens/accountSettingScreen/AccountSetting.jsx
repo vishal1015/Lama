@@ -4,9 +4,10 @@ import "./styles.css";
 import axios from "axios";
 import Sidebar from "../../sideBar/SideBar";
 import ScreenHeader from "../../components/LayoutScreenHeader/ScreenHeader";
+import { dbUri } from "../../utils/Constants";
 
 const AccountSetting = () => {
-  
+
   const userId = localStorage.getItem("userId");
   const email = localStorage.getItem("email");
   const password = localStorage.getItem("password");
@@ -17,14 +18,11 @@ const AccountSetting = () => {
     const getNewName = async () => {
       console.log(userId, username, email, password);
       try {
-        const response = await axios.put(
-          `http://localhost:5000/api//users/${userId}`,
-          {
-            username,
-            email,
-            password,
-          }
-        );
+        const response = await axios.put(`${dbUri}/api//users/${userId}`, {
+          username,
+          email,
+          password,
+        });
         console.log(response);
         const newusername = response.data.username;
         localStorage.setItem("username", newusername);

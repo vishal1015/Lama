@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { GrEdit } from "react-icons/gr";
 import { IoIosSearch } from "react-icons/io";
 import axios from "axios";
+import { dbUri } from "../../utils/Constants";
 import "./styles.css";
 
 const EditTranscriptScreen = () => {
@@ -15,7 +16,7 @@ const EditTranscriptScreen = () => {
   const getFilesDescription = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/users/${userId}/projects/${projectId}/files/${fileId}`
+        `${dbUri}/api/users/${userId}/projects/${projectId}/files/${fileId}`
       );
       console.log("Files:", response.data.description);
       return response.data.description;
@@ -37,7 +38,7 @@ const EditTranscriptScreen = () => {
   const handleSave = async () => {
     try {
       await axios.put(
-        `http://localhost:5000/api/users/${userId}/projects/${projectId}/files/${fileId}`,
+        `${dbUri}/api/users/${userId}/projects/${projectId}/files/${fileId}`,
         { description: inputValue }
       );
       setText(inputValue); // Update text with the new input value
@@ -45,7 +46,7 @@ const EditTranscriptScreen = () => {
     } catch (error) {
       console.error("Error while saving the file description:", error.message);
     }
-    alert('file edited successfully');
+    alert("file edited successfully");
   };
 
   const handleChange = (e) => {
@@ -108,7 +109,17 @@ const EditTranscriptScreen = () => {
               <textarea
                 value={inputValue}
                 onChange={handleChange}
-                className="input-box"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  boxSizing: "border-box",
+                  padding: "8px",
+                  resize: "none",
+                  border: "none",
+                  outline: "none",
+                  fontSize: "16px",
+                  lineHeight: "1.5",
+                }}
               />
             ) : (
               <p>{text}</p>

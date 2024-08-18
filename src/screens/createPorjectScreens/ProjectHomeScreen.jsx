@@ -2,6 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import HomeHeader from "../../components/creatProjectHomeHeader/HomeHeader";
 import AllProject from "./AllProjects";
 import AddProjectHome from "./AddProjectHome";
+import { dbUri } from "../../utils/Constants";
 import axios from "axios";
 // import { BeatLoader } from "react-spinners";
 
@@ -23,7 +24,7 @@ const ProjectHomeScreen = () => {
     setIsLoading(true);
     try {      
       const response = await axios.post(
-        `http://localhost:5000/api/users/${userId}/projects`,
+        `${dbUri}/api/users/${userId}/projects`,
         { projectName }
       );
       setIsLoading(false);
@@ -38,9 +39,7 @@ const ProjectHomeScreen = () => {
     console.log(userId);
     setIsLoading(true);
     try {
-      const response = await axios.get(
-        `http://localhost:5000/api/users/${userId}/projects`,
-      );
+      const response = await axios.get(`${dbUri}/api/users/${userId}/projects`);
       console.log("Project recived:", response.data);
       setIsLoading(false);
       return response.data;
