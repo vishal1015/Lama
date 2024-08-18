@@ -3,10 +3,9 @@ import cloud from "/cloud.png"
 import youtubeimg from "/youtube.png"
 import spotifyImg from "/spotyfi.png"
 import rssfeedImg from "/rssfeed.png"
-import { useState ,createContext, useContext ,useEffect} from "react";
+import { useState ,createContext, useContext} from "react";
 import ChannelCard from "../../components/channelCard/ChannelCard";
 import FileUploadDialogBox from "./FileUplodeDialogBox"
-import { useNavigate, useParams} from "react-router-dom";
 import axios from "axios"
 import SampleProject from "./SampleProject";
 
@@ -19,13 +18,13 @@ const Upload = () => {
     const [errorMessage, setErrorMessage] = useState("");
     const [isUploade, setIsUploade] = useState(true);
     const [files, setFiles] = useState([]);
+    const [isLoading , setIsLoading] = useState(false);
 
-    const navigate = useNavigate();
-    // const {userId, projectId} = useParams();
     const userId = localStorage.getItem("userId");
     const projectId = localStorage.getItem("projectId");
     
     const addFile = async (name,description) => {
+      setIsLoading(true);
       try {
         const response = await axios.post(
           `http://localhost:5000/api/users/${userId}/projects/${projectId}/files`,
@@ -35,9 +34,11 @@ const Upload = () => {
       } catch (error) {
         console.error("Error in Adding File:", error.message);
       }
+      setIsLoading(false);
     };
 
     const getFiles = async () => {
+      setIsLoading(true);
       try {
         const response = await axios.get(
           `http://localhost:5000/api/users/${userId}/projects/${projectId}/files`
@@ -48,6 +49,7 @@ const Upload = () => {
       } catch (error) {
         console.error("Error while getting Files:", error.message);
       }
+      setIsLoading(false);
     };
 
       const fetchFiles = async () => {
@@ -55,11 +57,7 @@ const Upload = () => {
         setFiles(fechedfile);
       };
 
-      useEffect(() => {
-        fetchFiles();
-      }, []);
-
-      // This function will be called after saving a file in the dialog
+      //  function for calling after saving a file in the dialog
       const onFileUpdate = () => {
         fetchFiles(); // Re-fetch the files after an update
       };
@@ -71,6 +69,7 @@ const Upload = () => {
     const handleCloseDialog = () => {
       setIsDialogOpen(false);
       setFileName("");
+      setfileDiscription("");
       setErrorMessage("");
     };
 
@@ -84,13 +83,15 @@ const Upload = () => {
         setErrorMessage("Please enter Project Link");
       } else {
         console.log("File name & discripiton:", fileName ,fileDiscription);
-        fetchFiles();
+       
         handleCloseDialog();
+         setIsLoading(true);
         //save fils in db
-        await addFile(fileName,fileDiscription);
-        // navigate(`/add-project/${userId}/app/${projectId}/sample`);
-         if(isUploade) setIsUploade(false);
+         await addFile(fileName,fileDiscription);
+         fetchFiles();
+         setIsLoading(false);
       }
+      if (isUploade) setIsUploade(false);
     }
    
    const contextvalue = {
@@ -99,6 +100,7 @@ const Upload = () => {
      fileDiscription,
      errorMessage,
      files,
+     isLoading,
      setFiles,
      setErrorMessage,
      setfileDiscription,
@@ -110,6 +112,7 @@ const Upload = () => {
      handleCloseDialog,
      handleUpload,
      onFileUpdate,
+     setIsLoading,
    };
 
   return (

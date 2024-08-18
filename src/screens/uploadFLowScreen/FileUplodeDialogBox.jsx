@@ -1,9 +1,9 @@
 import photo from "/photo2.jpg";
-
 import { FileContext } from "./Upload";
 import { useContext } from "react";
 
 const FileUploadDialogBox = () => {
+  
   const {
     handleCloseDialog,
     fileName,
@@ -13,7 +13,7 @@ const FileUploadDialogBox = () => {
     errorMessage,
     handleUpload,
   } = useContext(FileContext);
-   console.log(handleCloseDialog,fileName);
+
   return (
     <div
       className="fixed inset-0 bg-black bg-opacity-50 flex
@@ -29,7 +29,7 @@ const FileUploadDialogBox = () => {
             onClick={handleCloseDialog}
             className="bg-white hover:bg-gray-100 font-bold py-2 px-4  text-gray-500 rounded"
           >
-            X
+            X 
           </button>
         </div>
         <h2>Name</h2>

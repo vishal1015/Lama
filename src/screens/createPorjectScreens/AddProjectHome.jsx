@@ -5,11 +5,10 @@ import { useContext } from "react";
 import DialogBox from "./DialogBox";
 import { ProjectContext } from "./ProjectHomeScreen";
 import * as projectConstants from "../../utils/Constants"; 
-import { BeatLoader } from "react-spinners";
 import "./styles.css"; 
 
 function AddProjectHome() {
-  const { isDialogOpen, handleOpenDialog, isLoading } =
+  const { isDialogOpen, handleOpenDialog} =
     useContext(ProjectContext);
    
   return (
@@ -28,16 +27,7 @@ function AddProjectHome() {
             <p>{projectConstants.createNewProjectText}</p>
           </button>
 
-          {isDialogOpen ?
-            (
-              isLoading ? 
-              <div className="justify-center items-center flex h-screen">
-                <BeatLoader color="#2790cf"/>
-              </div>
-              : <DialogBox />
-            )
-            :null
-          }
+          {isDialogOpen && <DialogBox />}
         </div>
       </div>
     </>

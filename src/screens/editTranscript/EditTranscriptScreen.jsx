@@ -108,17 +108,7 @@ const EditTranscriptScreen = () => {
               <textarea
                 value={inputValue}
                 onChange={handleChange}
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  boxSizing: "border-box",
-                  padding: "8px",
-                  resize: "none",
-                  border: "none",
-                  outline: "none",
-                  fontSize: "16px",
-                  lineHeight: "1.5",
-                }}
+                className="input-box"
               />
             ) : (
               <p>{text}</p>

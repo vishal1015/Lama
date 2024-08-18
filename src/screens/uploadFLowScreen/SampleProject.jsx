@@ -32,7 +32,7 @@ const SampleProject = () =>{
             onClick={() => {
               handleOpenDialog();
             }}
-          />
+          /> 
           <ChannelCard
             imgSrc={rssfeedImg}
             text1="Upload"

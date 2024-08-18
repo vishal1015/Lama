@@ -1,27 +1,30 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./styles.css";
 import axios from "axios";
 import { useContext } from "react";
 import { FileContext } from "../../screens/uploadFLowScreen/Upload";
+import { PulseLoader } from "react-spinners";
 
 const TableComponent = () => {
-  const { files, onFileUpdate } = useContext(FileContext);
+  const { files, onFileUpdate , isLoading ,setIsLoading } = useContext(FileContext);
  
   const navigate = useNavigate();
-  // const { userId, projectId } = useParams();
      const userId = localStorage.getItem("userId");
      const projectId = localStorage.getItem("projectId");
 
   const deleteFile = async (fileId) => {
+    setIsLoading(true);
     try {
       const response = await axios.delete(
         `http://localhost:5000/api/users/${userId}/projects/${projectId}/files/${fileId}`
       );
       console.log(`File deletion message: ${response}`);
       onFileUpdate(); // Re-fetch the files after deletion
+      
     } catch (error) {
       console.log(`Error in deleting file: ${error}`);
     }
+    setIsLoading(false);
   };
 
   const handleEdit = (fileId) => {
@@ -29,6 +32,13 @@ const TableComponent = () => {
     navigate(`/sample-project/transcript`);
     console.log(`${fileId} went to edit page`);
   };
+
+  if(files.length === 0 && isLoading === false ) return <h1>no files avialble pease add</h1>
+  if(isLoading) return (
+    <div className=" justify-center items-center ">
+      <PulseLoader />
+    </div>
+  );
 
   return (
     <div className="container mx-auto p-4">
@@ -42,7 +52,6 @@ const TableComponent = () => {
               <th>Action</th>
             </tr>
           </thead>
-
           <tbody>
             {files.map((item) => (
               <tr key={item._id}>

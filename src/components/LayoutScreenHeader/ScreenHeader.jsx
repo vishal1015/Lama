@@ -6,23 +6,25 @@ import "./styles.css";
 import { useContext, useState } from "react";
 import { GlobalContext } from "../../GlobalContext";
 import BreadCrum from "./BreadCrum"
+import { useNavigate } from "react-router";
 
 const ScreenHeader = () => {
+
+ const navigate = useNavigate();
+  const handleNavigation = () =>{
+    navigate("/account-settings");
+  }
 
   return (
     <>
       <header className="header-container">
         <div className="path-container">
-          {/* <img src={HomeIcon} alt="" className="icon-small" />
-          <p className="path-text">
-            Sample Project /<span className="upload-text"> Upload</span>
-          </p> */}
           <BreadCrum />
         </div>
         <div className="options-container">
           <div className="language-container">
             <SingleSelectDropdown />
-            <img src={Photo} alt="" className="profile-pic" />
+            <img src={Photo} alt="" className="profile-pic" onClick={handleNavigation} />
           </div>
           <img src={BellIcon} alt="" className="icon-medium" />
         </div>
@@ -50,8 +52,8 @@ const SingleSelectDropdown = () => {
 
   // Handler for selecting an option
   const handleSelectOption = (option) => {
-    setSelectedLang(option); // Set the selected option
-    setIsOpen(false); // Close the dropdown
+    setSelectedLang(option); 
+    setIsOpen(false); 
   };
 
   return (

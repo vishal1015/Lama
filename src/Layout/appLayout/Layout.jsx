@@ -1,6 +1,6 @@
 
-import { Outlet, Link } from "react-router-dom";
-import "./Layout.css"; // Create this CSS file for styling
+import { Outlet} from "react-router-dom";
+import "./Layout.css"; 
 import Sidebar from "../../sideBar/SideBar";
 import ScreenHeader from "../../components/LayoutScreenHeader/ScreenHeader";
 const Layout = () => {

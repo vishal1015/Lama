@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { SketchPicker } from "react-color"; // Import the color picker from react-color
-import "./styles.css"; // Import any custom styles
+import { SketchPicker } from "react-color"; 
+import "./styles.css"; 
 
 const ColorPicker = () => {
-  const [color, setColor] = useState("#7E22CE"); // Default color
+  const [color, setColor] = useState("#7E22CE"); 
   const [displayColorPicker, setDisplayColorPicker] = useState(false);
 
   const handleInputChange = (event) => {

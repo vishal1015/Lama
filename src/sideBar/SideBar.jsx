@@ -1,4 +1,4 @@
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate} from "react-router-dom";
 import LamaIcon from "/lamaIcon.png";
 import { IoMdSettings } from "react-icons/io";
 import "./styles.css";
@@ -6,12 +6,8 @@ import "./styles.css";
 const Sidebar = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  // const { userId, projectId } = useParams();
-  const userId = localStorage.getItem("userId");
-  const projectId = localStorage.getItem("projectId");
-
+  
   const isActive = (path) => location.pathname === path;
-
   const handleNavigate = (path) => {
     navigate(path);
   };
@@ -38,8 +34,16 @@ const Sidebar = () => {
               }`}
             onClick={() => handleNavigate(`/sample-project/upload`)}
           >
-            <div className="rounded-full inner bg-black text-white flex p-3 relative">
-              <div className="w-1 h-1 rounded-full flex justify-center items-center">
+            <div
+              className={`rounded-full inner  flex p-3 relative 
+            ${
+              isActive(`/sample-project/upload`) ? " bg-black text-white" : null
+            }
+            `}
+            >
+              <div
+                className={`w-1 h-1 rounded-full flex justify-center items-center`}
+              >
                 <p>1</p>
               </div>
             </div>
@@ -55,7 +59,15 @@ const Sidebar = () => {
               handleNavigate(`/sample-project/widget-configuration`)
             }
           >
-            <div className="rounded-full inner flex p-3 relative">
+            <div
+              className={`rounded-full inner  flex p-3 relative 
+            ${
+              isActive(`/sample-project/widget-configuration`)
+                ? " bg-black text-white"
+                : null
+            }
+            `}
+            >
               <div className="w-1 h-1 rounded-full flex justify-center items-center">
                 <p>2</p>
               </div>

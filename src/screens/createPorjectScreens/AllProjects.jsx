@@ -1,29 +1,29 @@
-
-import  { useContext } from "react";
+import { useContext } from "react";
 import ProjectCard from "../../components/projectCard/ProjectCard";
 import { HiOutlinePlusCircle } from "react-icons/hi";
 import { ProjectContext } from "./ProjectHomeScreen";
 import DialogBox from "./DialogBox";
-import { useNavigate ,useParams } from "react-router";
+import { useNavigate } from "react-router";
 import * as projectConstants from "../../utils/Constants";
+import { PulseLoader } from "react-spinners";
 import "./styles.css";
-// import useProjects from "../../hooks/useProjects";
 
 const AllProject = () => {
-  const { handleOpenDialog, isDialogOpen ,projectNames } = useContext(ProjectContext);
+  const { handleOpenDialog, isDialogOpen, projectNames, isLoading } =
+    useContext(ProjectContext);
   const navigate = useNavigate();
-  // const { projects, loading } = useProjects();
-  // const { userId } = useParams();
-  const userId = localStorage.getItem("userId");
-         const handleNavigation = (projectId) => {
-           console.log(`handleNavigation is running and pid${projectId}`);
-          //  navigate("/app");
-           localStorage.setItem("projectId", projectId)
-           navigate(`/sample-project/upload`);
-         };
 
-  // if (loading) return <p>Loading projects...</p>;
+  const handleNavigation = (projectId) => {
+    console.log(`handleNavigation is running and pid${projectId}`);
+    localStorage.setItem("projectId", projectId);
+    navigate(`/sample-project/upload`);
+  };
 
+  if (isLoading) return (
+    <div className=" justify-center items-center ">
+      <PulseLoader />
+    </div>
+  );
   return (
     <div>
       <div className="all-project-container">
@@ -43,7 +43,9 @@ const AllProject = () => {
               <ProjectCard
                 key={project._id}
                 ProjectName={project.projectName}
-                onClick={()=>{handleNavigation(project._id)}}
+                onClick={() => {
+                  handleNavigation(project._id);
+                }}
               />
             ))
           ) : (

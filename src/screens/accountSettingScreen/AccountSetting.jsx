@@ -6,35 +6,37 @@ import Sidebar from "../../sideBar/SideBar";
 import ScreenHeader from "../../components/LayoutScreenHeader/ScreenHeader";
 
 const AccountSetting = () => {
-         const userId = localStorage.getItem("userId");
-         const email = localStorage.getItem("email");
-         const password = localStorage.getItem("password");
-         const [username, setUsername] = useState('')
+  
+  const userId = localStorage.getItem("userId");
+  const email = localStorage.getItem("email");
+  const password = localStorage.getItem("password");
+  const [username, setUsername] = useState("");
+  const name = localStorage.getItem("username");
 
-  const updateUserinfo = async() =>{
-    const getNewName = async() =>{
-              try {
-                const response = await axios.post(
-                  `http://localhost:5000/api//users/${userId}`,
-                  {
-                    username,
-                    email,
-                    password,
-                  }
-                );
-                console.log(response);
-                const newusername = response.data.username;
-                localStorage.setItem(username, newusername);
-                alert("username changed successfully");
-              } catch (error) {
-                console.log("user could not updated :" + error);
-              }
-           }
+  const updateUserinfo = async () => {
+    const getNewName = async () => {
+      console.log(userId, username, email, password);
+      try {
+        const response = await axios.put(
+          `http://localhost:5000/api//users/${userId}`,
+          {
+            username,
+            email,
+            password,
+          }
+        );
+        console.log(response);
+        const newusername = response.data.username;
+        localStorage.setItem("username", newusername);
+        alert("username changed successfully");
+      } catch (error) {
+        console.log("user could not updated :" + error);
+      }
+    };
 
-      const updatedeUserName = await getNewName();
-      setUsername(updatedeUserName);
-     
-  }
+    const updatedeUserName = await getNewName();
+    setUsername(updatedeUserName);
+  };
   return (
     <>
       <div className="flex h-screen">
@@ -57,10 +59,11 @@ const AccountSetting = () => {
                 <div className="input-group">
                   <h2 className="label">{accountConstants.userNameLabel}</h2>
                   <input
-                    placeholder={localStorage.getItem(username)}
+                    placeholder={name}
                     className="input-field"
                     value={username}
                     onChange={(e) => {
+                      console.log(username);
                       setUsername(e.target.value);
                     }}
                   />
@@ -69,8 +72,9 @@ const AccountSetting = () => {
                   <h2 className="label">{accountConstants.emailLabel}</h2>
                   <input
                     placeholder={accountConstants.emailPlaceholder}
-                    className="input-field"
+                    className="input-field cursor-no-drop"
                     value={email}
+                    disabled={true}
                   />
                 </div>
               </div>
